@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/web/AccessDenied.jsp</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/controller/BaseController.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/service/UserDAO.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/web/Login/Login.jsp</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/service/AccountDAO.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/controller/LoginController.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/service/RoleDetailDAO.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/model/UserModel.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/model/AccountModel.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/filter/AuthenticationFilter.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/model/RoleDetailModel.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/service/BaseDAO.java</file>
+            <file>file:/D:/Study/Chuyên%20ngành/Chuyên%20ngành%204/PRJ321/Project/demoSessionCookie/src/java/controller/AuthenticationBaseController.java</file>
+        </group>
+    </open-files>
+</project-private>
