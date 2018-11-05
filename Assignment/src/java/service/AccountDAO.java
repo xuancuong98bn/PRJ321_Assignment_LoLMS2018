@@ -69,7 +69,7 @@ public class AccountDAO extends BaseDAO<AccountModel> {
     public AccountModel get(AccountModel account) {
         AccountModel a = new AccountModel();
 
-        String sql = "SELECT * FROM Account WHERE username = " + account.getUsername();
+        String sql = "SELECT * FROM Account WHERE username = '" + account.getUsername()+"'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();

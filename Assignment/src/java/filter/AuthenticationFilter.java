@@ -18,6 +18,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.AccountModel;
+import service.AccountDAO;
+import service.RoleDetailDAO;
+import service.UserDAO;
 
 /**
  *
@@ -41,7 +45,18 @@ public class AuthenticationFilter implements Filter {
             log("AuthenticationFilter:DoBeforeProcessing");
         }
 
-        
+        HttpSession session = ((HttpServletRequest)request).getSession();
+        AccountModel user = (AccountModel) session.getAttribute("user");
+        if (user == null || user.getUsername().isEmpty()){
+            ((HttpServletResponse) response).sendRedirect("../Login");
+            return;
+        }
+        RoleDetailDAO rodeDAO = new RoleDetailDAO();
+        UserDAO userDAO = new UserDAO();
+        int roleID = userDAO.getRoleID(user.getUserID());
+        if (! rodeDAO.checkRole(roleID, ((HttpServletRequest)request).getServletPath())){
+            request.getRequestDispatcher("AccessDenied.jsp").forward(request, response);
+        }
         
         // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.
@@ -109,12 +124,7 @@ public class AuthenticationFilter implements Filter {
         
         doBeforeProcessing(request, response);
         
-        HttpSession session = ((HttpServletRequest)request).getSession();
-        String userName = (String) session.getAttribute("user");
-        if (userName == null || userName.isEmpty()){
-            ((HttpServletResponse) response).sendRedirect("../Login");
-            return;
-        }
+        
         
         Throwable problem = null;
         try {

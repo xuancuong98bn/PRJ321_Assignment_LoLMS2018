@@ -44,14 +44,14 @@ public class RoleDetailDAO extends BaseDAO<RoleDetailModel> {
     }
 
     @Override
-    public RoleDetailModel get(int id) {
+    public RoleDetailModel get(int roleID) {
         RoleDetailModel a = new RoleDetailModel();
 
-        String sql = "SELECT Role.ID, Role.role, RoleDetail.action, RoleDetail.link\n"
+        String sql = "SELECT TOP 1 Role.ID, Role.role, RoleDetail.action, RoleDetail.link\n"
                 + " FROM Role INNER JOIN\n"
                 + " Role_RoleDetail_rf ON Role.ID = Role_RoleDetail_rf.roleID INNER JOIN\n"
                 + " RoleDetail ON Role_RoleDetail_rf.roleDetailID = RoleDetail.ID"
-                + " WHERE ID = " + id;
+                + " WHERE Role.ID = " + roleID;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();

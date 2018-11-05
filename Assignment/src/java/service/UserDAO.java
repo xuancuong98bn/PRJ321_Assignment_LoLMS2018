@@ -66,7 +66,7 @@ public class UserDAO extends BaseDAO<UserModel> {
     
     public int getRoleID (int userId) {
         int a = 0;
-        String sql = "SELECT roleID FROM User WHERE ID = " + userId;
+        String sql = "SELECT roleID FROM dbo.[User] WHERE ID = " + userId;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
