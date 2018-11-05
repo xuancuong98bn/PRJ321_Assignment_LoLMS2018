@@ -55,7 +55,7 @@ public class AuthenticationFilter implements Filter {
         UserDAO userDAO = new UserDAO();
         int roleID = userDAO.getRoleID(user.getUserID());
         if (! rodeDAO.checkRole(roleID, ((HttpServletRequest)request).getServletPath())){
-            request.getRequestDispatcher("AccessDenied.jsp").forward(request, response);
+            request.getRequestDispatcher("../AccessDenied.jsp").forward(request, response);
         }
         
         // Write code here to process the request and/or response before

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.AccountModel;
 import model.RoleDetailModel;
 import service.AccountDAO;
@@ -24,6 +25,7 @@ public class LoginController extends BaseController {
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         AccountDAO accDAO = new AccountDAO();
         UserDAO userDAO = new UserDAO();
         RoleDetailDAO rodeDAO = new RoleDetailDAO();
@@ -38,12 +40,18 @@ public class LoginController extends BaseController {
         PrintWriter out = response.getWriter();
         out.println(request.getServletPath());
         if (dummy != null){
+            AccountModel user = new AccountModel();
+            user.setUsername(dummy.getUsername());
+            user.setUserID(dummy.getUserID());
+            //user = dummy;
+            session.setAttribute("user", user);
+            
             int roleID = userDAO.getRoleID(dummy.getUserID());
             RoleDetailModel r = rodeDAO.get(roleID);
             if (r.getRole().equals("admin")){
-                request.getRequestDispatcher("/manage/HomePage").forward(request, response);
+                response.sendRedirect("./manage/HomePage");
             } else {
-                request.getRequestDispatcher("/user/HomePage").forward(request, response);
+                response.sendRedirect("./user/HomePage");
             }
         } else {
             request.getRequestDispatcher("Login/Login.jsp").forward(request, response);
@@ -52,7 +60,21 @@ public class LoginController extends BaseController {
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("Login/Login.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        UserDAO userDAO = new UserDAO();
+        RoleDetailDAO rodeDAO = new RoleDetailDAO();
+        AccountModel dummy = (AccountModel) session.getAttribute("user");
+        if (dummy != null){            
+            int roleID = userDAO.getRoleID(dummy.getUserID());
+            RoleDetailModel r = rodeDAO.get(roleID);
+            if (r.getRole().equals("admin")){
+                response.sendRedirect("./manage/HomePage");
+            } else {
+                response.sendRedirect("./user/HomePage");
+            }
+        } else {
+            request.getRequestDispatcher("Login/Login.jsp").forward(request, response);
+        }
     }
 
     /**
