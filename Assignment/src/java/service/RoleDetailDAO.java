@@ -73,7 +73,7 @@ public class RoleDetailDAO extends BaseDAO<RoleDetailModel> {
                 + " FROM Role INNER JOIN\n"
                 + " Role_RoleDetail_rf ON Role.ID = Role_RoleDetail_rf.roleID INNER JOIN\n"
                 + " RoleDetail ON Role_RoleDetail_rf.roleDetailID = RoleDetail.ID"
-                + " WHERE ID = " + roleID;
+                + " WHERE Role.ID = " + roleID;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
@@ -94,7 +94,7 @@ public class RoleDetailDAO extends BaseDAO<RoleDetailModel> {
     public boolean checkRole(int roleID, String link){
         ArrayList<RoleDetailModel> listRole = getListRoleByID(roleID);
         for (RoleDetailModel role : listRole) {
-            if (role.getLink().equals(link)){
+            if (role.getLink().startsWith(link)){
                 return true;
             }
         }

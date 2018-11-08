@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.AccountModel;
+import model.RoleDetailModel;
 import service.AccountDAO;
 import service.RoleDetailDAO;
 import service.UserDAO;
@@ -28,36 +29,39 @@ import service.UserDAO;
  * @author MTC
  */
 public class AuthenticationFilter implements Filter {
-    
+
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public AuthenticationFilter() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
             log("AuthenticationFilter:DoBeforeProcessing");
         }
 
-        HttpSession session = ((HttpServletRequest)request).getSession();
+        HttpSession session = ((HttpServletRequest) request).getSession();
         AccountModel user = (AccountModel) session.getAttribute("user");
-        if (user == null || user.getUsername().isEmpty()){
+        if (user == null || user.getUsername().isEmpty()) {
             ((HttpServletResponse) response).sendRedirect("../Login");
             return;
         }
         RoleDetailDAO rodeDAO = new RoleDetailDAO();
         UserDAO userDAO = new UserDAO();
         int roleID = userDAO.getRoleID(user.getUserID());
-        if (! rodeDAO.checkRole(roleID, ((HttpServletRequest)request).getServletPath())){
+        RoleDetailModel rodeMod = rodeDAO.get(roleID);
+        
+        if (! rodeDAO.checkRole(roleID, "/" +rodeMod.getRole())){
+//        if (!rodeDAO.checkRole(roleID, "/user")) {
             request.getRequestDispatcher("../AccessDenied.jsp").forward(request, response);
         }
-        
+
         // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log items on the request object,
@@ -78,8 +82,8 @@ public class AuthenticationFilter implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -117,15 +121,13 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         if (debug) {
             log("AuthenticationFilter:doFilter()");
         }
-        
+
         doBeforeProcessing(request, response);
-        
-        
-        
+
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
@@ -136,7 +138,7 @@ public class AuthenticationFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
+
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -171,16 +173,16 @@ public class AuthenticationFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("AuthenticationFilter:Initializing filter");
             }
         }
@@ -199,20 +201,20 @@ public class AuthenticationFilter implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -229,7 +231,7 @@ public class AuthenticationFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -243,9 +245,9 @@ public class AuthenticationFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }
