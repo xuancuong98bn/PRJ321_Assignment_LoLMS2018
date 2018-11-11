@@ -94,7 +94,7 @@ public class RoleDetailDAO extends BaseDAO<RoleDetailModel> {
     public boolean checkRole(int roleID, String link){
         ArrayList<RoleDetailModel> listRole = getListRoleByID(roleID);
         for (RoleDetailModel role : listRole) {
-            if (role.getLink().startsWith(link)){
+            if (role.getLink().equals(link)){
                 return true;
             }
         }

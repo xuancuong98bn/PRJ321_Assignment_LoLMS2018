@@ -52,12 +52,10 @@ public class AuthenticationFilter implements Filter {
             ((HttpServletResponse) response).sendRedirect("../Login");
             return;
         }
+        RoleDetailModel rodeMod = (RoleDetailModel) session.getAttribute("roleDetail");
         RoleDetailDAO rodeDAO = new RoleDetailDAO();
-        UserDAO userDAO = new UserDAO();
-        int roleID = userDAO.getRoleID(user.getUserID());
-        RoleDetailModel rodeMod = rodeDAO.get(roleID);
         
-        if (! rodeDAO.checkRole(roleID, "/" +rodeMod.getRole())){
+        if (! rodeDAO.checkRole(rodeMod.getID(), ((HttpServletRequest) request).getServletPath())){
 //        if (!rodeDAO.checkRole(roleID, "/user")) {
             request.getRequestDispatcher("../AccessDenied.jsp").forward(request, response);
         }

@@ -35,20 +35,21 @@ public class LoginController extends BaseController {
         dummy.setUsername(username);
         dummy.setPassword(password);
         dummy = accDAO.get(dummy);
-        
+
         //writer to check
         PrintWriter out = response.getWriter();
         out.println(request.getServletPath());
-        if (dummy != null){
+        if (dummy != null) {
             AccountModel user = new AccountModel();
             user.setUsername(dummy.getUsername());
             user.setUserID(dummy.getUserID());
             //user = dummy;
             session.setAttribute("user", user);
-            
+
             int roleID = userDAO.getRoleID(dummy.getUserID());
             RoleDetailModel r = rodeDAO.get(roleID);
-            if (r.getRole().equals("admin")){
+            session.setAttribute("roleDetail", r);
+            if (r.getRole().equals("admin")) {
                 response.sendRedirect("./manage/HomePage");
             } else {
                 response.sendRedirect("./user/HomePage");
@@ -64,10 +65,10 @@ public class LoginController extends BaseController {
         UserDAO userDAO = new UserDAO();
         RoleDetailDAO rodeDAO = new RoleDetailDAO();
         AccountModel dummy = (AccountModel) session.getAttribute("user");
-        if (dummy != null){            
+        if (dummy != null) {
             int roleID = userDAO.getRoleID(dummy.getUserID());
             RoleDetailModel r = rodeDAO.get(roleID);
-            if (r.getRole().equals("admin")){
+            if (r.getRole().equals("admin")) {
                 response.sendRedirect("./manage/HomePage");
             } else {
                 response.sendRedirect("./user/HomePage");
