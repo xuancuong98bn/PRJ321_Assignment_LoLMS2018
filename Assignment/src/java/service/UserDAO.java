@@ -42,7 +42,6 @@ public class UserDAO extends BaseDAO<UserModel> {
         return listUser;
     }
 
-    @Override
     public UserModel get(int id) {
         UserModel a = new UserModel();
 

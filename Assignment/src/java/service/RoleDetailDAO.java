@@ -43,7 +43,6 @@ public class RoleDetailDAO extends BaseDAO<RoleDetailModel> {
         return listUser;
     }
 
-    @Override
     public RoleDetailModel get(int roleID) {
         RoleDetailModel a = new RoleDetailModel();
 

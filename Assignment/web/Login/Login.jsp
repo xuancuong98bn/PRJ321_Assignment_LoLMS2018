@@ -9,7 +9,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title data-i18n="LOGIN_PAGE_TITLE">Login in</title>
+        <title data-i18n="LOGIN_PAGE_TITLE">Login</title>
         <meta name="google" content="notranslate">
         <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">

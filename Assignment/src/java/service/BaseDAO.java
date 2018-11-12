@@ -40,7 +40,6 @@ public abstract class BaseDAO<T extends BaseModel> {
 
     public abstract ArrayList<T> all();
 
-    public abstract T get(int id);
 
     public abstract void insert(T model);
 

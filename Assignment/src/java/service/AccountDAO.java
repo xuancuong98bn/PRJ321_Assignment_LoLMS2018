@@ -43,7 +43,6 @@ public class AccountDAO extends BaseDAO<AccountModel> {
         return listAccount;
     }
 
-    @Override
     public AccountModel get(int id) {
         AccountModel a = new AccountModel();
 
