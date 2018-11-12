@@ -28,6 +28,10 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controller.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TeamsPageController</servlet-name>
+        <servlet-class>controller.TeamsPageController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TeamsPageController</servlet-name>
+        <url-pattern>/manage/TeamsPage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
