@@ -3,7 +3,7 @@
     <ul class="sidebar-menu list-unstyled">
         <li class="sidebar-list-item"><a href="HomePage" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>Home</span></a></li>
         <li class="sidebar-list-item"><a href="TeamsPage" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>Teams</span></a></li>
-        <li class="sidebar-list-item"><a href="tables.html" class="sidebar-link text-muted"><i class="o-table-content-1 mr-3 text-gray"></i><span>Players</span></a></li>
+        <li class="sidebar-list-item"><a href="PlayersPage" class="sidebar-link text-muted"><i class="o-table-content-1 mr-3 text-gray"></i><span>Players</span></a></li>
         <li class="sidebar-list-item"><a href="forms.html" class="sidebar-link text-muted"><i class="o-survey-1 mr-3 text-gray"></i><span>Fixtures</span></a></li>
         <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-gray"></i><span>Pages</span></a>
             <div id="pages" class="collapse">

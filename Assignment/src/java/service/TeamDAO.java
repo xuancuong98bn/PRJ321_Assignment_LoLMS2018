@@ -49,14 +49,14 @@ public class TeamDAO extends BaseDAO<TeamModel> {
         return listTeam;
     }
 
-    public TeamModel get(String name) {
+    public TeamModel get(int ID) {
         TeamModel a = new TeamModel();
 
         String sql = "SELECT        Team.ID, Team.name, Coach.name AS coachName, Coach.linkImg AS linkCoachImg, Region.name AS regionName, Team.description, Team.linkImg AS linkTeamImg, Team.linkLogo\n"
                 + "	FROM            Coach INNER JOIN\n"
                 + "		 Team ON Coach.ID = Team.coachID INNER JOIN\n"
                 + "		 Region ON Team.regionID = Region.ID\n"
-                + "	WHERE Team.name = '" + name + "'";
+                + "	WHERE Team.ID = "+ ID;
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
@@ -67,8 +67,9 @@ public class TeamDAO extends BaseDAO<TeamModel> {
                 a.setLinkCoachImg(rs.getString("linkCoachImg").trim());
                 a.setRegionName(rs.getString("regionName").trim());
                 a.setDescription(rs.getString("description").trim());
-                a.setLinkTeamImg(rs.getString("linkTeamImg").trim());
-                a.setLinkLogo(rs.getString("linkLogo").trim());
+                String temp = rs.getString("linkLogo");
+                temp = temp == null ? "NULL": temp;
+                a.setLinkLogo(temp.trim());
             }
         } catch (SQLException ex) {
             Logger.getLogger(TeamDAO.class.getName()).log(Level.SEVERE, null, ex);

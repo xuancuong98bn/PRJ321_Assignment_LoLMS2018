@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +38,7 @@ public class PlayerDAO extends BaseDAO<PlayerModel> {
                 a.setTeamID(rs.getInt("teamID"));
                 a.setPosition(rs.getString("position"));
                 String temp = rs.getString("linkImg");
-                temp = temp == null?"NULL":temp;
+                temp = temp == null ? "NULL" : temp;
                 a.setLinkImgSub(temp.trim());
                 listPlayer.add(a);
             }
@@ -64,7 +65,9 @@ public class PlayerDAO extends BaseDAO<PlayerModel> {
                 a.setName(rs.getString("name").trim());
                 a.setTeamID(rs.getInt("teamID"));
                 a.setPosition(rs.getString("position"));
-                a.setLinkImgSub(rs.getString("linkImg").trim());
+                String temp = rs.getString("linkImg");
+                temp = temp == null ? "NULL" : temp;
+                a.setLinkImgSub(temp.trim());
             }
         } catch (SQLException ex) {
             Logger.getLogger(PlayerDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,7 +92,9 @@ public class PlayerDAO extends BaseDAO<PlayerModel> {
                 a.setName(rs.getString("name").trim());
                 a.setTeamID(rs.getInt("teamID"));
                 a.setPosition(rs.getString("position"));
-                a.setLinkImgSub(rs.getString("linkImg").trim());
+                String temp = rs.getString("linkImg");
+                temp = temp == null ? "NULL" : temp;
+                a.setLinkImgSub(temp.trim());
                 listPlayer.add(a);
             }
         } catch (SQLException ex) {
@@ -100,11 +105,45 @@ public class PlayerDAO extends BaseDAO<PlayerModel> {
 
     @Override
     public void insert(PlayerModel model) {
-        
+
+    }
+
+    public List<PlayerModel> paggingPlayer(int PageSize, int PageIndex) {
+        ArrayList<PlayerModel> listPlayer = new ArrayList<>();
+
+        String sql = "WITH t AS (SELECT        Player.ID, Player.name, Team_Player_Position_rf.teamID, Position.position, SubDetail.linkImg\n"
+                + "	FROM            Position INNER JOIN\n"
+                + "	Team_Player_Position_rf ON Position.ID = Team_Player_Position_rf.positionID INNER JOIN\n"
+                + "	Player ON Team_Player_Position_rf.playerID = Player.ID LEFT OUTER JOIN\n"
+                + "	SubDetail ON Player.ID = SubDetail.playerID) \n"
+                + "	SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY ID ASC) AS rn, *  FROM t) AS x\n"
+                + "	WHERE rn BETWEEN (?-1)*? + 1 AND ?*?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, PageIndex);
+            statement.setInt(2, PageSize);
+            statement.setInt(3, PageSize);
+            statement.setInt(4, PageIndex);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                PlayerModel a = new PlayerModel();
+                a.setID(rs.getInt("ID"));
+                a.setName(rs.getString("name").trim());
+                a.setTeamID(rs.getInt("teamID"));
+                a.setPosition(rs.getString("position"));
+                String temp = rs.getString("linkImg");
+                temp = temp == null ? "NULL" : temp;
+                a.setLinkImgSub(temp.trim());
+                listPlayer.add(a);
+            }
+        } catch (SQLException ex) {
+        }
+        return listPlayer;
+
     }
 
     public void update(PlayerModel model) {
-        
+
     }
 
 }
